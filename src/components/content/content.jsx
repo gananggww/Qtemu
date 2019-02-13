@@ -1,7 +1,42 @@
 import React, { Component } from 'react';
 import '../../App.css';
+import { Prev, Next } from './list';
 
 class Content extends Component {
+  constructor() {
+    super() 
+    this.state = {
+      list: [{
+        date: '27 November 2017',
+        place: 'Jakarta',
+        many: 360
+      }, {
+        date: '27 November 2017',
+        place: '',
+        many: null
+      }, {
+        date: '27 November 2017',
+        place: 'hehe Jakarta',
+        many: 360
+      }],
+      obj: {
+        title: 'artikel selanjutnya',
+        date: '27 November 2017',
+        content: 'Lorem Ipsum doler amet Lorem Ipsum doler amet Lorem Ipsum doler amet'
+      }
+    }
+  }
+  pushya() {
+    let arr = this.state.list
+    arr.push({
+      date: '27 November 2017',
+      place: 'hehe Jakarta',
+      many: 360
+    })
+    this.setState({
+      list: arr
+    })
+  }
   render() {
     return (
       <div>
@@ -9,38 +44,12 @@ class Content extends Component {
           <div className="title-content">
             Next Meet Up
           </div>
-          <div className="paragraph-content">
-            <div className="title-paragraph-content">Title</div>
-            <div className="date-paragraph-content">20 September 2019</div>
-            <div className="fill-paragraph-content">
-              Lorem Ipsum doler amet Lorem Ipsum doler amet Lorem Ipsum doler amet <br/>
-              Lorem Ipsum doler ametLorem Ipsum doler amet <br/>
-              Lorem Ipsum doler ametLorem Ipsum doler amet
-            </div>
-          </div>
+          <Next obj={this.state.obj} />
         </div>
         <div className="list">
           <div className="title-list">Past Meet Up</div>
-          <div className="items">
-            <div className="item">
-              <div className="fill">27 November 2017</div>
-              <div className="fill">39 Jakarta JS</div>
-              <div className="fill">360 went</div>
-              <div className="fill button">view</div>
-            </div>
-            <div className="item">
-              <div className="fill">27 November 2017</div>
-              <div className="fill">39 Jakarta JS</div>
-              <div className="fill">360 went</div>
-              <div className="fill button">view</div>
-            </div>
-            <div className="item">
-              <div className="fill">27 November 2017</div>
-              <div className="fill">39 Jakarta JS</div>
-              <div className="fill">360 went</div>
-              <div className="fill button">view</div>
-            </div>
-          </div>
+          <button onClick={() => this.pushya()}>hehe</button>
+          <Prev list={this.state.list}/>
         </div>
       </div>
     );

@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Info = ({info}) => {  
+export const Info = (xx) => {  
     return (
         <div>
             <div className="sub-header">
                 {
-                    info.map(e => {
+                    xx.info.map(e => {
                         return <div>{e}</div>  
                     })
                 }
@@ -13,5 +13,3 @@ const Info = ({info}) => {
         </div>    
     )
 }
-
-export default Info

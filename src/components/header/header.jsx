@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Info from './info'
+import { Info } from './info'
 import '../../App.css';
 
 class Header extends Component {
@@ -24,7 +24,7 @@ class Header extends Component {
               <div>Kuota</div>
               <div>Instruktur</div>
             </div>
-            <Info info={this.state.list}/>
+            <Info hehe={this.state.check} info={this.state.list}/>
           </div>
           <div className="button-header">Join Us</div>
         </div>
