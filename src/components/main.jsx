@@ -16,7 +16,7 @@ class Main extends Component {
     return (
       <div className="body">
         <Navbar title={this.state.name} />
-        <Header />
+        {/* <Header /> */}
         <Content />
       </div>
     );
