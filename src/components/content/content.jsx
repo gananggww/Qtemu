@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../../App.css';
 import { Prev, Next, Swapi } from './list';
+import {content_style} from './content_style'
 import axios from 'axios';
 
 class Content extends Component {
@@ -27,7 +28,13 @@ class Content extends Component {
       },
       get_list: [],
       element_status: true,
-      detail: null
+      detail: null,
+      item: {
+        backgroundColor: 'red',
+        fontWeight: 'bold'
+      },
+      color: 'grey',
+      currentState: 1
     }
     
   }
@@ -59,9 +66,14 @@ class Content extends Component {
   }
 
   async fetching_3(url=null) {
+    if (url) {
+      this.setState({
+        element_status: false
+      })
+    }
     let options = {
       method: 'GET',
-      url: url ? url : 'https://swapi.co/api/people/'
+      url: url ? url : `https://swapi.co/api/people/?page=${this.state.currentState}`
     }
     try {
       let { data } = await axios(options)
@@ -70,12 +82,14 @@ class Content extends Component {
         if (!url) {
           this.setState({
             get_list: data.results,
+            count: data.count,
+            previous: data.previous
             // element_status: true
           })
         } else {
           this.setState({
             detail: data,
-            element_status: false
+            // element_status: false
           })
           // alert(JSON.stringify(data.name))
         }
@@ -126,7 +140,7 @@ class Content extends Component {
       console.log(error)
     }
   }
-
+  
   detail_con() {
     if(this.state.element_status) {
       return (
@@ -134,7 +148,7 @@ class Content extends Component {
             {
                 this.state.get_list.map((e, idx) => {
                     return (
-                        <div onClick={() => this.fetching_3(e.url)} className="item">
+                        <div style={{backgroundColor: this.state.color, color: 'white'}} onClick={() => this.fetching_3(e.url)} className="item">
                             <div className="fill">{idx + 1} {e.name}</div>
                             <div className="fill">{this.if_null(e.height)}</div>
                             <div className="fill">{this.if_null(e.hair_color)}</div>
@@ -148,12 +162,36 @@ class Content extends Component {
     } else {
       return (
         <div>
-          <button onClick={() => this.setState({element_status: true})}>balik bray</button>
-          {this.state.detail.name}
+          <button onClick={() => this.setState({element_status: true, detail: null})}>balik bray</button>
+          {this.state.detail ? this.state.detail.name : 'loading....'}
         </div>
       )
     }
 
+  }
+
+  next() {
+    this.setState({
+      get_list: []
+    })
+    this.setState({
+      currentState: this.state.currentState + 1
+    }, () => {
+      this.fetching_3()
+    })  
+  }
+
+  prev() {
+    if (this.state.previous) {
+      this.setState({
+        get_list: []
+      })
+      this.setState({
+        currentState: this.state.currentState - 1
+      }, () => {
+        this.fetching_3()  
+      })
+    }
   }
 
   render() {
@@ -165,11 +203,26 @@ class Content extends Component {
           </div>
           <Next obj={this.state.obj} />
         </div> */}
-        <div className="list">
+        <div className={`list ${this.state.listsbg}` }>
           <div className="title-list">Past Meet Up</div>
           <button onClick={() => this.pushya()}>hehe</button>
           {/* <Prev list={this.state.list}/> */}
           {/* <Swapi list={this.state.get_list}></Swapi> */}
+          <div>
+            {this.state.get_list.length}
+            <hr/>
+            <div>Ganti warna list kuy!</div>
+            <button onClick={() => this.setState({ color: 'red', listsbg: 'green'})}>merah</button>
+            <button onClick={() => this.setState({ color: 'green', listsbg: 'red'})}>hijau</button>
+            <button onClick={() => this.setState({ color: 'blue', listsbg: 'yellow'})}>blue</button>
+          </div>
+
+
+          <div>
+            <button onClick={() => this.prev()}>Prev</button> 
+              {this.state.currentState} 
+            <button onClick={() => this.next()}>Next</button>
+          </div>
           {this.detail_con()}
         </div>
       </div>
