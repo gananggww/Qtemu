@@ -140,7 +140,7 @@ class Content extends Component {
       console.log(error)
     }
   }
-  
+
   detail_con() {
     if(this.state.element_status) {
       return (

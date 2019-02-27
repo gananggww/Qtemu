@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import {  BrowserRouter as Mother } from 'react-router-dom'
 import Main from './components/main.jsx'
 import './App.css';
+
 
 class App extends Component {
   constructor(props) {
@@ -12,9 +14,11 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <Main />
-      </div>
+      <Mother>
+        <div>
+          <Main />
+        </div>
+      </Mother>
     );
   }
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import '../../App.css';
 
 class Navbar extends Component {
@@ -7,13 +8,13 @@ class Navbar extends Component {
       this.state = {
         icon: 'Qtemu',
         list: [{
-            name: 'fadli'
+            name: 'fadli hoho'
         }, {
-            name: 'bobby'            
+            name: 'bobby hehe'            
         }, {
-            name: 'rama'
+            name: 'rama hihi'
         }, {
-            name: 'robin'            
+            name: 'robin xaxa'            
         }]
       }
   }
@@ -43,7 +44,12 @@ class Navbar extends Component {
   }
 
   alert_myself(idx, val){
-      alert(idx + ' ' +val)
+      // alert(idx + ' ' +val)
+  }
+
+  slug(val) {
+    let rs = val.split(' ')
+    return rs.join('-')
   }
 
   events() {
@@ -51,7 +57,7 @@ class Navbar extends Component {
         return (
             this.state.list.map((e, idx) => {
                 return (
-                <a onClick={() => this.alert_myself(idx, e.name)} style={{marginRight: '10px'}}> {idx + 1} {e.name} </a>
+                    <Link to={idx === 0 ? "/":`/${this.slug(e.name)}`} onClick={() => this.alert_myself(idx, e.name)} style={{marginRight: '10px'}}> {idx + 1} {e.name} </Link>
                 )
             })
         )
@@ -67,6 +73,7 @@ class Navbar extends Component {
               <div className="logo">{this.props.title}</div>
               <div>{this.props.name}</div>
               {this.events()}
+              
           </div>
           <div className="right-navbar">
                 Login
