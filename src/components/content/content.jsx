@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import '../../App.css';
 import { Prev, Next, Swapi } from './list';
 import {content_style} from './content_style'
+import { connect } from "react-redux";
+import { searchAction } from '../../redux/actions.js'
 import axios from 'axios';
-
 class Content extends Component {
   constructor() {
     super() 
@@ -103,6 +104,7 @@ class Content extends Component {
     // this.fetching()
     // this.fetching_2()
     this.fetching_3()
+    this.props.search('bobby')
   }
 
   
@@ -197,6 +199,7 @@ class Content extends Component {
   render() {
     return (
       <div>
+        <div>{this.props.query_state}</div>
         {/* <div className="content">
           <div className="title-content">
             Next Meet Up
@@ -230,4 +233,15 @@ class Content extends Component {
   }
 }
 
-export default Content;
+const mapStateToProps = (state) => {
+  return {
+    query_state: state ? state.query : 'loading'
+  }
+}
+
+const mapDispatchToProps = (dispatch) => ({  
+  search: (payload) => dispatch(searchAction(payload)),  
+})
+
+const Connection = connect(mapStateToProps, mapDispatchToProps)(Content);
+export default Connection

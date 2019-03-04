@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { headerAction } from '../../redux/actions.js'
 import '../../App.css';
 
 class Navbar extends Component {
@@ -45,6 +47,7 @@ class Navbar extends Component {
 
   alert_myself(idx, val){
       // alert(idx + ' ' +val)
+      this.props.header(val)
   }
 
   slug(val) {
@@ -83,4 +86,11 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar;
+
+
+const mapDispatchToProps = (dispatch) => ({  
+  header: (payload) => dispatch(headerAction(payload)),  
+})
+
+const Connection = connect(null, mapDispatchToProps)(Navbar);
+export default Connection

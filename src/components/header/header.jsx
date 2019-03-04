@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import { Info } from './info'
 import '../../App.css';
 
@@ -16,7 +17,7 @@ class Header extends Component {
       return (
         <div>
           <div className="photo">
-            Photo
+            {this.props.header_state}
           </div>
           <div className="content-header">
             <div className="title-header">Kelas Hacktiv8 punya routing {this.props.name.name}</div>
@@ -52,4 +53,11 @@ class Header extends Component {
   }
 }
 
-export default Header;
+const mapStateToProps = (state) => {
+  return {
+    header_state: state ? state.header : 'loading'
+  }
+}
+
+const Connection = connect(mapStateToProps, null)(Header);
+export default Connection

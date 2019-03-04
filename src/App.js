@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {  BrowserRouter as Mother } from 'react-router-dom'
+import { Provider } from "react-redux"
+import  store  from "./redux/store"
 import Main from './components/main.jsx'
 import './App.css';
 
@@ -14,11 +16,13 @@ class App extends Component {
 
   render() {
     return (
-      <Mother>
-        <div>
-          <Main />
-        </div>
-      </Mother>
+      <Provider store={store}>
+        <Mother>
+          <div>
+            <Main />
+          </div>
+        </Mother>
+      </Provider>
     );
   }
 }
