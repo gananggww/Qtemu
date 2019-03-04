@@ -1,6 +1,8 @@
 const defaultState = {
     query: '',
-    header: ''
+    header: '',
+    list_fetch: [],
+    currentPage: 1
 }
 
 const myReducer = (state=defaultState, action) => {  
@@ -9,6 +11,8 @@ const myReducer = (state=defaultState, action) => {
             return {...state, query: action.payload }
         case "HEADER":      
             return {...state, header: action.payload }
+        case "FETCH":      
+            return {...state, list_fetch: action.payload.results }
     }
 };
 

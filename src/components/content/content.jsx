@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import '../../App.css';
-import { Prev, Next, Swapi } from './list';
+import { Prev, Next, Swapi} from './list';
+import Paggination from './paggination';
 import {content_style} from './content_style'
 import { connect } from "react-redux";
-import { searchAction } from '../../redux/actions.js'
+import { searchAction, fetchThunk } from '../../redux/actions.js'
 import axios from 'axios';
 class Content extends Component {
   constructor() {
@@ -103,7 +104,8 @@ class Content extends Component {
   componentWillMount() {
     // this.fetching()
     // this.fetching_2()
-    this.fetching_3()
+    this.props.fetch_ya()
+    // this.fetching_3()
     this.props.search('bobby')
   }
 
@@ -148,7 +150,7 @@ class Content extends Component {
       return (
         <div className="items">
             {
-                this.state.get_list.map((e, idx) => {
+                this.props.fetch_state.map((e, idx) => {
                     return (
                         <div style={{backgroundColor: this.state.color, color: 'white'}} onClick={() => this.fetching_3(e.url)} className="item">
                             <div className="fill">{idx + 1} {e.name}</div>
@@ -220,12 +222,12 @@ class Content extends Component {
             <button onClick={() => this.setState({ color: 'blue', listsbg: 'yellow'})}>blue</button>
           </div>
 
-
-          <div>
+          <Paggination></Paggination>
+          {/* <div>
             <button onClick={() => this.prev()}>Prev</button> 
               {this.state.currentState} 
             <button onClick={() => this.next()}>Next</button>
-          </div>
+          </div> */}
           {this.detail_con()}
         </div>
       </div>
@@ -235,12 +237,14 @@ class Content extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    query_state: state ? state.query : 'loading'
+    query_state: state ? state.query : 'loading',
+    fetch_state: state ? state.list_fetch : []
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({  
-  search: (payload) => dispatch(searchAction(payload)),  
+  search: (payload) => dispatch(searchAction(payload)), 
+  fetch_ya: () => dispatch(fetchThunk()) 
 })
 
 const Connection = connect(mapStateToProps, mapDispatchToProps)(Content);

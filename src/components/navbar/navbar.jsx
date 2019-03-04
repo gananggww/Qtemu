@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { headerAction } from '../../redux/actions.js'
+import { headerThunk } from '../../redux/actions.js'
 import '../../App.css';
 
 class Navbar extends Component {
@@ -89,7 +89,7 @@ class Navbar extends Component {
 
 
 const mapDispatchToProps = (dispatch) => ({  
-  header: (payload) => dispatch(headerAction(payload)),  
+  header: (payload) => dispatch(headerThunk(payload))
 })
 
 const Connection = connect(null, mapDispatchToProps)(Navbar);
