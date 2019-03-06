@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { headerThunk } from '../../redux/actions.js'
+import { headerThunk, change_page } from '../../redux/actions.js'
 import '../../App.css';
 
 class Navbar extends Component {

@@ -20,17 +20,25 @@ export const fetchAction = (payload) => {
     }
 }
 
-export const fetchThunk = () => {
-    return async(dispatch, getState) => {
-        let curr = await getState()
-        if (curr) {
-            console.log('====',curr);
-        }
-        let options = {
-            method: 'GET',
-            url: `https://swapi.co/api/people/?page=${1}`
-          }
+export const change_page = (currentPage) => {
+    return {
+        type: 'CHANGE_PAGE',
+        payload:  currentPage
+    }
+}
+
+export const fetchThunk = (payload=1) => {
+    return async(dispatch, getState) => {        
         try {
+            let curr = await getState()
+            let page = 1
+            if (curr) {
+                page = curr.currentPage
+            }
+            let options = {
+                method: 'GET',
+                url: `https://swapi.co/api/people/?page=${payload}`
+            }
             let { data } = await axios(options)
             if (data) {
                 return dispatch(fetchAction(data))
@@ -38,7 +46,7 @@ export const fetchThunk = () => {
                 return dispatch(fetchAction('loading'))
             }
         } catch(error) {
-            console.log('error');
+            console.log(error);
         }
     }
 }
